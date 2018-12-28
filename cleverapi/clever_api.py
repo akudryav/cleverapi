@@ -92,9 +92,55 @@ class BaseCleverApi():
     def use_extra_life(self):
         return self.fetch("streamQuiz.useExtraLife")
 
+    def anytime_start_game(self, is_realtime, game_id):
+        data = {
+        "is_realtime": is_realtime,
+        "game_id": game_id,
+        }
+        return self.fetch("streamQuiz.anytimeStartGame")
+
+    def anytime_get_next_question(self, is_realtime, game_id):
+        data = {
+        "is_realtime": is_realtime,
+        "game_id": game_id,
+        }
+        return self.fetch("streamQuiz.anytimeGetNextQuestion")
+
+    def stream_quiz_anytime_send_answer(self, game_id, question_ind, answer_id):
+        data = {
+        "game_id": game_id,
+        "question_ind": question_ind,
+        "answer_id": answer_id,
+        }
+        return self.fetch("streamQuiz.anytimeSendAnswer")
+
+    def stream_quiz_anytime_check_answer(self):
+        return self.fetch("streamQuiz.anytimeCheckAnswer")
+
+    def streamQuiz_anytime_mark_seen(self, game_ids):
+        data = {
+        "game_ids": game_ids,
+        }
+        return self.fetch("streamQuiz.anytimeMarkSeen", data)
+
     def get_nearby_users(self, lat, lon):
         data = {"lat": lat, "lon": lon}
         return self.fetch("execute.getNearbyUsers", data)
+
+    def poll_random_game(self):
+        return self.fetch("execute.pollRandomGame")
+
+    def get_battle_stat_game(self):
+        return self.fetch("execute.getBattleGameState")
+
+    def use_friends_help(self):
+        return self.fetch("execute.useFriendsHelp")
+
+    def finish_game(self, game_id):
+        data = {
+        "funk_v": "2",
+        "game_id": game_id,
+        }
 
     def comment(self, *, owner_id, video_id, message):
         data = {
@@ -104,6 +150,7 @@ class BaseCleverApi():
         }
 
         return self.fetch("execute.createComment", data)
+
 
 
 class CleverApi(BaseCleverApi):
